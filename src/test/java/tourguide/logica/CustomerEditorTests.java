@@ -1,4 +1,7 @@
-package hello;
+package tourguide.logica;
+
+import static org.mockito.BDDMockito.then;
+import static org.mockito.Matchers.argThat;
 
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
@@ -11,9 +14,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import tourguide.logica.Customer;
 import tourguide.logica.CustomerEditor;
 import tourguide.logica.CustomerRepository;
-
-import static org.mockito.BDDMockito.*;
-import static org.mockito.Matchers.argThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerEditorTests {
