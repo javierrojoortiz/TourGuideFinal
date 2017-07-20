@@ -16,6 +16,12 @@ import static org.assertj.core.api.BDDAssertions.*;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.boot.VaadinAutoConfiguration;
+
+import tourguide.logica.Customer;
+import tourguide.logica.CustomerEditor;
+import tourguide.logica.CustomerRepository;
+import tourguide.visual.VaadinUI;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

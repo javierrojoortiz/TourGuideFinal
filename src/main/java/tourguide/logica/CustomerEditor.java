@@ -1,4 +1,4 @@
-package hello;
+package tourguide.logica;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -1,4 +1,4 @@
-package hello;
+package tourguide.visual;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -13,6 +13,10 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+
+import tourguide.logica.Customer;
+import tourguide.logica.CustomerEditor;
+import tourguide.logica.CustomerRepository;
 
 @SpringUI
 public class VaadinUI extends UI {

@@ -8,6 +8,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import tourguide.logica.Customer;
+import tourguide.logica.CustomerEditor;
+import tourguide.logica.CustomerRepository;
+
 import static org.mockito.BDDMockito.*;
 import static org.mockito.Matchers.argThat;
 

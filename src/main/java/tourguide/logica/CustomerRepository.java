@@ -1,4 +1,4 @@
-package hello;
+package tourguide.logica;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

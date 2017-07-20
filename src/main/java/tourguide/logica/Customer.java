@@ -1,4 +1,4 @@
-package hello;
+package tourguide.logica;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
