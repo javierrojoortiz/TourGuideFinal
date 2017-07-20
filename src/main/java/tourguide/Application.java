@@ -26,7 +26,7 @@ public class Application {
 	public CommandLineRunner loadData(LugarRepository lugarRepository) {
 		return (args) -> {
 			// save a couple of customers
-			lugarRepository.save(new Lugar("La Catedral", "Edificio religiosos"));
+			lugarRepository.save(new Lugar("La Catedral", "Edificio religioso"));
 			lugarRepository.save(new Lugar("Iglesia del Santísimo Cristo", "Edificio religioso"));
 			lugarRepository.save(new Lugar("Iglesia del Sagrado Corazón", "Edificio religioso"));
 			lugarRepository.save(new Lugar("Iglesia de la Consolación", "Edificio religioso"));

@@ -59,13 +59,14 @@ public class VaadinUI extends UI {
 		setContent(mainLayout);
 		
 		menubar.setWidth(100.0f, Unit.PERCENTAGE);
-		menubar.addItem("Lugares", null, null);
+		menubar.addItem("Hoteles", null, null);
 		menubar.addItem("Restaurantes", null, null);
 
-		grid.setHeight(300, Unit.PIXELS);
+		grid.setWidth(700, Unit.PIXELS);
+		grid.setHeight(500, Unit.PIXELS);
 		grid.setColumns("id", "nombreLugar", "tipo");
 
-		filter.setPlaceholder("Filter by last name");
+		filter.setPlaceholder("Filtrar por tipo");
 
 		// Hook logic to components
 
