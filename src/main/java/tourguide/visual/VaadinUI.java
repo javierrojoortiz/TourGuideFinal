@@ -94,7 +94,7 @@ public class VaadinUI extends UI {
     private final Command menuCommand = selectedItem -> selectedItem.getText();
    
 
-	// tag::listCustomers[]
+	// tag::listLugares[]
 	void listCustomers(String filterText) {
 		if (StringUtils.isEmpty(filterText)) {
 			grid.setItems(repoLugar.findAll());
@@ -103,7 +103,7 @@ public class VaadinUI extends UI {
 			grid.setItems(repoLugar.findByTipoStartsWithIgnoreCase(filterText));
 		}
 	}
-	// end::listCustomers[]
+	// end::listLugares[]
 
 }
 
