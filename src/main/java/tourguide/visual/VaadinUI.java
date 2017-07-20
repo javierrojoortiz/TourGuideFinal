@@ -10,6 +10,9 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.MenuBar;
+import com.vaadin.ui.MenuBar.Command;
+import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -30,22 +33,31 @@ public class VaadinUI extends UI {
 	final TextField filter;
 
 	private final Button addNewBtn;
+	
+	final MenuBar menubar;
+	
 
 	@Autowired
 	public VaadinUI(CustomerRepository repo, CustomerEditor editor) {
 		this.repo = repo;
 		this.editor = editor;
 		this.grid = new Grid<>(Customer.class);
+		this.menubar = new MenuBar();
 		this.filter = new TextField();
 		this.addNewBtn = new Button("New customer", FontAwesome.PLUS);
 	}
 
 	@Override
 	protected void init(VaadinRequest request) {
+		HorizontalLayout menubarLayout = new HorizontalLayout(menubar);
 		// build layout
 		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
-		VerticalLayout mainLayout = new VerticalLayout(actions, grid, editor);
+		VerticalLayout mainLayout = new VerticalLayout(menubarLayout,actions, grid, editor);
 		setContent(mainLayout);
+		
+		menubar.setWidth(100.0f, Unit.PERCENTAGE);
+		menubar.addItem("Lugares", null, null);
+		menubar.addItem("Restaurantes", null, null);
 
 		grid.setHeight(300, Unit.PIXELS);
 		grid.setColumns("id", "firstName", "lastName");
@@ -75,6 +87,9 @@ public class VaadinUI extends UI {
 		// Initialize listing
 		listCustomers(null);
 	}
+	
+    private final Command menuCommand = selectedItem -> selectedItem.getText();
+   
 
 	// tag::listCustomers[]
 	void listCustomers(String filterText) {
