@@ -21,6 +21,8 @@ public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class);
 	}
+	
+	
 
 	@Bean
 	public CommandLineRunner loadData(LugarRepository lugarRepository) {
@@ -56,7 +58,7 @@ public class Application {
 			
 
 			// fetch all lugares
-			log.info("Customers found with findAll():");
+			log.info("Lugares found with findAll():");
 			log.info("-------------------------------");
 			for (Lugar lugar : lugarRepository.findAll()) {
 				log.info(lugar.toString());
@@ -71,7 +73,7 @@ public class Application {
 			log.info("");
 
 			// fetch lugares by last name
-			log.info("Customer found with findByTipoStartsWithIgnoreCase('Edificio religioso'):");
+			log.info("Lugar found with findByTipoStartsWithIgnoreCase('Edificio religioso'):");
 			log.info("--------------------------------------------");
 			for (Lugar edificioReligioso : lugarRepository
 					.findByTipoStartsWithIgnoreCase("Edificio religioso")) {

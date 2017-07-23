@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.vaadin.ui.Image;
+
 @Entity
 public class Lugar {
 
@@ -14,6 +16,8 @@ public class Lugar {
 	private String nombreLugar;
 
 	private String tipo;
+	
+	private Image imagen;
 
 	protected Lugar() {
 	}
@@ -41,6 +45,15 @@ public class Lugar {
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+	
+	
+	public Image getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(Image imagen) {
+		this.imagen = imagen;
 	}
 
 	@Override
