@@ -11,9 +11,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import tourguide.logica.Customer;
-import tourguide.logica.CustomerEditor;
-import tourguide.logica.CustomerRepository;
+import tourguide.logica.Hotel;
+import tourguide.logica.HotelEditor;
+import tourguide.logica.HotelRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerEditorTests {
@@ -21,13 +21,13 @@ public class CustomerEditorTests {
 	private static final String FIRST_NAME = "Marcin";
 	private static final String LAST_NAME = "Grzejszczak";
 
-	@Mock CustomerRepository customerRepository;
-	@InjectMocks CustomerEditor editor;
+	@Mock HotelRepository customerRepository;
+	@InjectMocks HotelEditor editor;
 
 	@Test
 	public void shouldStoreCustomerInRepoWhenEditorSaveClicked() {
-		this.editor.firstName.setValue(FIRST_NAME);
-		this.editor.lastName.setValue(LAST_NAME);
+		this.editor.nombre.setValue(FIRST_NAME);
+		this.editor.direccion.setValue(LAST_NAME);
 		customerDataWasFilled();
 
 		this.editor.save.click();
@@ -37,8 +37,8 @@ public class CustomerEditorTests {
 
 	@Test
 	public void shouldDeleteCustomerFromRepoWhenEditorDeleteClicked() {
-		this.editor.firstName.setValue(FIRST_NAME);
-		this.editor.lastName.setValue(LAST_NAME);
+		this.editor.nombre.setValue(FIRST_NAME);
+		this.editor.direccion.setValue(LAST_NAME);
 		customerDataWasFilled();
 
 		editor.delete.click();
@@ -47,17 +47,17 @@ public class CustomerEditorTests {
 	}
 
 	private void customerDataWasFilled() {
-		this.editor.editCustomer(new Customer(FIRST_NAME, LAST_NAME));
+		this.editor.editCustomer(new Hotel());
 	}
 
-	private TypeSafeMatcher<Customer> customerMatchesEditorFields() {
-		return new TypeSafeMatcher<Customer>() {
+	private TypeSafeMatcher<Hotel> customerMatchesEditorFields() {
+		return new TypeSafeMatcher<Hotel>() {
 			@Override
 			public void describeTo(Description description) {}
 
 			@Override
-			protected boolean matchesSafely(Customer item) {
-				return FIRST_NAME.equals(item.getFirstName()) && LAST_NAME.equals(item.getLastName());
+			protected boolean matchesSafely(Hotel item) {
+				return FIRST_NAME.equals(item.getNombre()) && LAST_NAME.equals(item.getDireccion());
 			}
 		};
 	}

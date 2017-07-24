@@ -1,17 +1,26 @@
 package tourguide.visual;
 
+import java.io.File;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
+import com.vaadin.icons.VaadinIcons;
+import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Resource;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinService;
 import com.vaadin.server.Sizeable.Unit;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
@@ -21,9 +30,9 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-import tourguide.logica.Customer;
-import tourguide.logica.CustomerEditor;
-import tourguide.logica.CustomerRepository;
+import tourguide.logica.Hotel;
+import tourguide.logica.HotelEditor;
+import tourguide.logica.HotelRepository;
 import tourguide.logica.Lugar;
 import tourguide.logica.LugarEditor;
 import tourguide.logica.LugarRepository;
@@ -41,10 +50,14 @@ public class VaadinUI extends UI {
 
 	private final Button addNewBtn;
 
+	private final Image img_inicio = new Image();
+	
 	MenuBar menubar;
 
 	private LugaresForm lugaresform = new LugaresForm(this);
 
+	Logger logger = Logger.getLogger(VaadinUI.class);
+	
 	@Autowired
 	public VaadinUI(LugarRepository repoLugar, LugarEditor lugarEditor) {
 		this.repoLugar = repoLugar;
@@ -60,19 +73,30 @@ public class VaadinUI extends UI {
 		HorizontalLayout menubarLayout = new HorizontalLayout(menubar);
 		// build layout
 		Panel panelLugar = new Panel("Panel Lugar");
+		
+		img_inicio.setSource(getImageResource("inicio.jpg"));
+		
 		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
-		VerticalLayout mainLayout = new VerticalLayout(menubarLayout, panelLugar);
+		VerticalLayout mainLayout = new VerticalLayout(menubarLayout,img_inicio, panelLugar);
 		setContent(mainLayout);
+		
 
 		// Define a common menu command for all the menu items.
 		MenuBar.Command commandVerPanelLugar = new MenuBar.Command() {
 			public void menuSelected(MenuItem selectedItem) {
 				panelLugar.setVisible(true);
-				menubar.removeItem(selectedItem);
+				img_inicio.setVisible(false);
+			}
+		};
+		
+		MenuBar.Command commandInicio = new MenuBar.Command() {
+			public void menuSelected(MenuItem selectedItem) {
+				img_inicio.setVisible(true);
 			}
 		};
 
 		menubar.setWidth(100.0f, Unit.PERCENTAGE);
+		menubar.addItem("Inicio", VaadinIcons.HOME , commandInicio);
 		menubar.addItem("Hoteles", null, null);
 		menubar.addItem("Restaurantes", null, null);
 		menubar.addItem("Lugares", null, commandVerPanelLugar);
@@ -134,6 +158,13 @@ public class VaadinUI extends UI {
 		}
 	}
 	// end::listLugares[]
+	private Resource getImageResource(String recurso) {
+
+		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
+		logger.debug("Ruta: " + basepath);
+		FileResource resource = new FileResource(new File (basepath + "/images/" + recurso));
+		return resource;
+	}
 
 }
 

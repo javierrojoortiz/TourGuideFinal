@@ -9,14 +9,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import tourguide.Application;
-import tourguide.logica.CustomerRepository;
+import tourguide.logica.HotelRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class ApplicationTests {
 
 	@Autowired
-	private CustomerRepository repository;
+	private HotelRepository repository;
 
 	@Test
 	public void shouldFillOutComponentsWithDataWhenTheApplicationIsStarted() {
