@@ -8,10 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import tourguide.logica.Hotel;
-import tourguide.logica.HotelRepository;
-import tourguide.logica.Lugar;
-import tourguide.logica.LugarRepository;
+import tourguide.logica.*;
 
 @SpringBootApplication
 public class Application {
@@ -25,7 +22,7 @@ public class Application {
 	
 
 	@Bean
-	public CommandLineRunner loadData(LugarRepository lugarRepository) {
+	public CommandLineRunner loadDataLugares(LugarRepository lugarRepository) {
 		return (args) -> {
 			// save a couple of customers
 			lugarRepository.save(new Lugar("La Catedral", "Edificio religioso"));
@@ -78,6 +75,64 @@ public class Application {
 			for (Lugar edificioReligioso : lugarRepository
 					.findByTipoStartsWithIgnoreCase("Edificio religioso")) {
 				log.info(edificioReligioso.toString());
+			}
+			log.info("");
+		};
+	}
+	
+	@Bean
+	public CommandLineRunner loadDataRestaurante(RestauranteRepository restauranteRepository) {
+		return (args) -> {
+			// save a couple of customers
+			restauranteRepository.save(new Restaurante("La Vinoteca", "Fusión"));
+			restauranteRepository.save(new Restaurante("Posada del Mar", "Marisco"));
+			restauranteRepository.save(new Restaurante("La Bombi", "Mediterranea"));
+			restauranteRepository.save(new Restaurante("El Serbal", "Mediterranea"));
+			restauranteRepository.save(new Restaurante("Pizzeria Vittorio", "Italiana"));
+			restauranteRepository.save(new Restaurante("Il Bocone", "Italiana"));
+			restauranteRepository.save(new Restaurante("Cocolatería Áliva", "Café"));
+			
+			/*restauranteRepository.save(new Restaurante("Palacio de La Magdalena", "Edificio singular"));
+			restauranteRepository.save(new Restaurante("Centro Botín", "Edificio singular"));
+			restauranteRepository.save(new Restaurante("Palacio de Festivales", "Edificio singular"));
+			restauranteRepository.save(new Restaurante("Biblioteca de Menéndez Pelayo", "Edificio singular"));
+			restauranteRepository.save(new Restaurante("Gran Casino", "Edificio singular"));
+			restauranteRepository.save(new Restaurante("Mercado de La Esperanza", "Edificio singular"));
+			
+			restauranteRepository.save(new Restaurante("Museo de Prehistoria y Arqueología de Cantabria", "Museo - Galería"));
+			restauranteRepository.save(new Restaurante("Biblioteca de Menéndez Pelayo", "Museo - Galería"));
+			restauranteRepository.save(new Restaurante("Casa – Museo de Menéndez Pelayo", "Museo - Galería"));
+			restauranteRepository.save(new Restaurante("Museo de Arte Moderno y Contemporáneo de Santander y Cantabria", "Museo - Galería"));
+			restauranteRepository.save(new Restaurante("Museo Marítimo del Cantábrico", "Museo - Galería"));
+					
+			restauranteRepository.save(new Restaurante("Los Peligros", "Playas"));
+			restauranteRepository.save(new Restaurante("La Magdalena", "Playas"));
+			restauranteRepository.save(new Restaurante("Bikinis", "Playas"));
+			restauranteRepository.save(new Restaurante("El Camello", "Playas"));
+			restauranteRepository.save(new Restaurante("La Concha", "Playas"));
+			restauranteRepository.save(new Restaurante("El Sardinero", "Playas"));
+			*/
+
+			// fetch all lugares
+			log.info("Lugares found with findAll():");
+			log.info("-------------------------------");
+			for (Restaurante restaurante : restauranteRepository.findAll()) {
+				log.info(restaurante.toString());
+			}
+			log.info("");
+
+			// fetch an individual lugar by ID
+			Restaurante restaurante = restauranteRepository.findOne(1L);
+			log.info("Lugar found with findOne(1L):");
+			log.info("--------------------------------");
+			log.info(restaurante.toString());
+			log.info("");
+
+			// fetch lugares by last name
+			log.info("Lugar found with findByTipoStartsWithIgnoreCase('Edificio religioso'):");
+			log.info("--------------------------------------------");
+			for (Restaurante restauranteItaliano: restauranteRepository.findByTipoStartsWithIgnoreCase("Italiana")) {
+				log.info(restauranteItaliano.toString());
 			}
 			log.info("");
 		};

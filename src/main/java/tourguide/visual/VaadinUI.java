@@ -51,6 +51,7 @@ public class VaadinUI extends UI {
 	Logger logger = Logger.getLogger(VaadinUI.class);
 	LugaresForm lugares;
 	HotelesForm hoteles;
+	RestaurantesForm restaurantes;
 	
 	@Autowired
 	public VaadinUI(LugarRepository repoLugar, LugarEditor lugarEditor) {
@@ -59,6 +60,7 @@ public class VaadinUI extends UI {
 		this.menubar = new MenuBar();
 		lugares = new LugaresForm(this,repoLugar, lugarEditor);
 		hoteles = new HotelesForm(this);
+		restaurantes = new RestaurantesForm(this);
 		
 	}
 
@@ -81,6 +83,14 @@ public class VaadinUI extends UI {
 			}
 		};
 		
+		MenuBar.Command commandVerPanelRestaurante = new MenuBar.Command() {
+			public void menuSelected(MenuItem selectedItem) {
+				ini.addComponent(restaurantes);
+				restaurantes.setVisible(true);
+				img_inicio.setVisible(false);
+			}
+		};
+		
 		MenuBar.Command commandInicio = new MenuBar.Command() {
 			public void menuSelected(MenuItem selectedItem) {
 				img_inicio.setVisible(true);
@@ -90,7 +100,7 @@ public class VaadinUI extends UI {
 		menubar.setWidth(100.0f, Unit.PERCENTAGE);
 		menubar.addItem("Inicio", VaadinIcons.HOME , commandInicio);
 		menubar.addItem("Hoteles", null, null);
-		menubar.addItem("Restaurantes", null, null);
+		menubar.addItem("Restaurantes", null, commandVerPanelRestaurante);
 		menubar.addItem("Lugares", null, commandVerPanelLugar);
 
 		
