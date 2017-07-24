@@ -40,51 +40,43 @@ import tourguide.logica.LugarRepository;
 @SpringUI
 public class VaadinUI extends UI {
 
+	private final Image img_inicio = new Image();
+	
+	MenuBar menubar;
+	
 	private final LugarRepository repoLugar;
 
 	private final LugarEditor lugarEditor;
 
-	final Grid<Lugar> gridLugar;
-
-	final TextField filter;
-
-	private final Button addNewBtn;
-
-	private final Image img_inicio = new Image();
-	
-	MenuBar menubar;
-
-	private LugaresForm lugaresform = new LugaresForm(this);
-
 	Logger logger = Logger.getLogger(VaadinUI.class);
+	LugaresForm lugares;
+	HotelesForm hoteles;
 	
 	@Autowired
 	public VaadinUI(LugarRepository repoLugar, LugarEditor lugarEditor) {
 		this.repoLugar = repoLugar;
 		this.lugarEditor = lugarEditor;
-		this.gridLugar = new Grid<>(Lugar.class);
 		this.menubar = new MenuBar();
-		this.filter = new TextField();
-		this.addNewBtn = new Button("Añadir Lugar", FontAwesome.PLUS);
+		lugares = new LugaresForm(this,repoLugar, lugarEditor);
+		hoteles = new HotelesForm(this);
+		
 	}
 
 	@Override
 	protected void init(VaadinRequest request) {
 		HorizontalLayout menubarLayout = new HorizontalLayout(menubar);
 		// build layout
-		Panel panelLugar = new Panel("Panel Lugar");
 		
 		img_inicio.setSource(getImageResource("inicio.jpg"));
-		
-		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
-		VerticalLayout mainLayout = new VerticalLayout(menubarLayout,img_inicio, panelLugar);
-		setContent(mainLayout);
-		
+		VerticalLayout ini = new VerticalLayout();
+		ini.addComponents(menubarLayout, img_inicio);
+		setContent(ini);
 
 		// Define a common menu command for all the menu items.
 		MenuBar.Command commandVerPanelLugar = new MenuBar.Command() {
 			public void menuSelected(MenuItem selectedItem) {
-				panelLugar.setVisible(true);
+				ini.addComponent(lugares);
+				lugares.setVisible(true);
 				img_inicio.setVisible(false);
 			}
 		};
@@ -101,63 +93,13 @@ public class VaadinUI extends UI {
 		menubar.addItem("Restaurantes", null, null);
 		menubar.addItem("Lugares", null, commandVerPanelLugar);
 
-		panelLugar.addStyleName("mypanelexample");
-		panelLugar.setSizeUndefined(); // Shrink to fit content
-		mainLayout.addComponent(panelLugar);
-		panelLugar.setVisible(false);
-
-		LugaresForm contenidoPanelLugar = new LugaresForm(this);
-
-		contenidoPanelLugar.addComponent(actions);
-		contenidoPanelLugar.addStyleName("mipanel de contenidos");
-		contenidoPanelLugar.addComponent(gridLugar);
-		contenidoPanelLugar.setSizeUndefined(); // Shrink to fit
-		contenidoPanelLugar.setMargin(true);
-		contenidoPanelLugar.addComponent(lugarEditor);
-		panelLugar.setContent(contenidoPanelLugar);
-
-		gridLugar.setWidth(700, Unit.PIXELS);
-		gridLugar.setHeight(300, Unit.PIXELS);
-		gridLugar.setColumns("id", "nombreLugar", "tipo");
-
-		filter.setPlaceholder("Filtrar por tipo");
-
-		// Hook logic to components
-
-		// Replace listing with filtered content when user changes filter
-		filter.setValueChangeMode(ValueChangeMode.LAZY);
-		filter.addValueChangeListener(e -> listLugares(e.getValue()));
-
-		// Connect selected Customer to editor or hide if none is selected
-		gridLugar.asSingleSelect().addValueChangeListener(e -> {
-			lugarEditor.editLugar(e.getValue());
-		});
-
-		// Instantiate and edit new Customer the new button is clicked
-		addNewBtn.addClickListener(e -> lugarEditor.editLugar(new Lugar("", "")));
-
-		// Listen changes made by the editor, refresh data from backend
-		lugarEditor.setChangeHandler(() -> {
-			lugarEditor.setVisible(false);
-			listLugares(filter.getValue());
-		});
-
-		// Initialize listing
-		listLugares(null);
+		
 
 	}
 
 	private final Command menuCommand = selectedItem -> selectedItem.getText();
 
-	// tag::listLugares[]
-	void listLugares(String filterText) {
-		if (StringUtils.isEmpty(filterText)) {
-			gridLugar.setItems(repoLugar.findAll());
-		} else {
-			gridLugar.setItems(repoLugar.findByTipoStartsWithIgnoreCase(filterText));
-		}
-	}
-	// end::listLugares[]
+	
 	private Resource getImageResource(String recurso) {
 
 		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
