@@ -80,6 +80,7 @@ public class VaadinUI extends UI {
 				ini.addComponent(lugares);
 				lugares.setVisible(true);
 				img_inicio.setVisible(false);
+				restaurantes.setVisible(false);
 			}
 		};
 		
@@ -88,6 +89,8 @@ public class VaadinUI extends UI {
 				ini.addComponent(restaurantes);
 				restaurantes.setVisible(true);
 				img_inicio.setVisible(false);
+				lugares.setVisible(false);
+				
 			}
 		};
 		
@@ -102,8 +105,7 @@ public class VaadinUI extends UI {
 		menubar.addItem("Hoteles", null, null);
 		menubar.addItem("Restaurantes", null, commandVerPanelRestaurante);
 		menubar.addItem("Lugares", null, commandVerPanelLugar);
-
-		
+	
 
 	}
 

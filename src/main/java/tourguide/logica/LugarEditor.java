@@ -8,6 +8,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -26,6 +27,14 @@ import com.vaadin.ui.themes.ValoTheme;
 @UIScope
 public class LugarEditor extends VerticalLayout {
 
+	public TextField getImagenRecurso() {
+		return imagenRecurso;
+	}
+
+	public void setImagenRecurso(TextField imagenRecurso) {
+		this.imagenRecurso = imagenRecurso;
+	}
+
 	private final LugarRepository lugarRepository;
 
 	/**
@@ -36,20 +45,43 @@ public class LugarEditor extends VerticalLayout {
 	/* Fields to edit properties in lugar entity */
 	TextField nombreLugar = new TextField("Nombre del Lugar");
 	TextField tipo = new TextField("Tipo");
+	
+	TextField imagenRecurso = new TextField("Imagen");
+	
+	TextField direccion = new TextField("Dirección: ");
 
-	/* Action buttons */
-	Button save = new Button("Save", FontAwesome.SAVE);
-	Button cancel = new Button("Cancel");
-	Button delete = new Button("Delete", FontAwesome.TRASH_O);
-	CssLayout actions = new CssLayout(save, cancel, delete);
+	TextField telefono = new TextField("Teléfono: ");
+		
+	TextField horario = new TextField("Horario de apertura: ");
+	
+	CheckBox visitaGuiada= new CheckBox("¿Tiene visitas guiadas?");
+	
+	TextField descripcion = new TextField("Descripción");
+
+	CssLayout actions = new CssLayout();
 
 	Binder<Lugar> binder = new Binder<>(Lugar.class);
 
 	@Autowired
 	public LugarEditor(LugarRepository lugarRepository) {
 		this.lugarRepository = lugarRepository;
-
-		addComponents(nombreLugar, tipo, actions);
+		
+		
+	
+		nombreLugar.setMaxLength(300);
+		nombreLugar.setReadOnly(true);
+		
+		tipo.setEnabled(false);
+		imagenRecurso.setEnabled(false);
+		direccion.setEnabled(false);
+		telefono.setEnabled(false);
+		horario.setEnabled(false);
+		visitaGuiada.setEnabled(false);
+		descripcion.setEnabled(false);
+		descripcion.setSizeFull();
+		
+		
+		addComponents(nombreLugar, tipo,imagenRecurso,direccion,telefono,horario,visitaGuiada,descripcion);
 
 		// bind using naming convention
 		binder.bindInstanceFields(this);
@@ -57,13 +89,7 @@ public class LugarEditor extends VerticalLayout {
 		// Configure and style components
 		setSpacing(true);
 		actions.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
-		save.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
-
-		// wire action buttons to save, delete and reset
-		save.addClickListener(e -> lugarRepository.save(lugar));
-		delete.addClickListener(e -> lugarRepository.delete(lugar));
-		cancel.addClickListener(e -> editLugar(lugar));
+	
 		setVisible(false);
 	}
 
@@ -85,7 +111,7 @@ public class LugarEditor extends VerticalLayout {
 		else {
 			lugar = l;
 		}
-		cancel.setVisible(persisted);
+//		cancel.setVisible(persisted);
 
 		// Bind lugar properties to similarly named fields
 		// Could also use annotation or "manual binding" or programmatically
@@ -95,16 +121,16 @@ public class LugarEditor extends VerticalLayout {
 		setVisible(true);
 
 		// A hack to ensure the whole form is visible
-		save.focus();
+	//	save.focus();
 		// Select all text in nombreLugar field automatically
 		nombreLugar.selectAll();
 	}
 
-	public void setChangeHandler(ChangeHandler h) {
-		// ChangeHandler is notified when either save or delete
-		// is clicked
-		save.addClickListener(e -> h.onChange());
-		delete.addClickListener(e -> h.onChange());
-	}
+//	public void setChangeHandler(ChangeHandler h) {
+//		// ChangeHandler is notified when either save or delete
+//		// is clicked
+//		save.addClickListener(e -> h.onChange());
+//		delete.addClickListener(e -> h.onChange());
+//	}
 
 }

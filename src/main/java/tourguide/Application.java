@@ -18,14 +18,13 @@ public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class);
 	}
-	
-	
+		
 
 	@Bean
 	public CommandLineRunner loadDataLugares(LugarRepository lugarRepository) {
 		return (args) -> {
 			// save a couple of customers
-			lugarRepository.save(new Lugar("La Catedral", "Edificio religioso"));
+			lugarRepository.save(new Lugar("La Catedral", "Edificio religioso","https://santanderspain.info/wp-content/uploads/2014/08/Catedral-de-Santander-686x1030.jpg"));
 			lugarRepository.save(new Lugar("Iglesia del Santísimo Cristo", "Edificio religioso"));
 			lugarRepository.save(new Lugar("Iglesia del Sagrado Corazón", "Edificio religioso"));
 			lugarRepository.save(new Lugar("Iglesia de la Consolación", "Edificio religioso"));
@@ -135,6 +134,7 @@ public class Application {
 				log.info(restauranteItaliano.toString());
 			}
 			log.info("");
+			
 		};
 	}
 	
