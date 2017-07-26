@@ -30,6 +30,7 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
@@ -49,11 +50,14 @@ public class LugaresForm extends FormLayout {
 	final Grid<Lugar> gridLugar;
 
 	final TextField filter;
-	String urlImg = "";
+	
 	private VaadinUI vaadinUI;
-	ExternalResource externalResource;
+	private ExternalResource externalResource;
 	private Image imagenWeb = new Image();
-
+	private String urlImg = "";
+	
+	private Label lbNombre=new Label();
+	
 	public LugaresForm(VaadinUI vaadinUI, LugarRepository repoLugar, LugarEditor lugarEditor) {
 		this.vaadinUI = vaadinUI;
 		this.repoLugar = repoLugar;
@@ -104,10 +108,11 @@ public class LugaresForm extends FormLayout {
 
 			externalResource = new ExternalResource(urlImg);
 			imagenWeb = setWeblImage(urlImg, imagenWeb);
+			lbNombre.setValue(e.getValue().getNombreLugar());
 			
 		});
 
-		secundaryLayout2.addComponent(imagenWeb);
+		secundaryLayout2.addComponents(lbNombre,imagenWeb);
 		mainLayout.addComponents(secundaryLayout2);
 		this.addComponents(secundaryLayout2);
 
