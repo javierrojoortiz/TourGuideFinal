@@ -39,6 +39,7 @@ public class Lugar {
 		this.nombreLugar = nombreLugar;
 		this.tipo = tipo;
 	}
+	
 	public Lugar(String nombreLugar, String tipo,String imagenRecurso) {
 		this.nombreLugar = nombreLugar;
 		this.tipo = tipo;

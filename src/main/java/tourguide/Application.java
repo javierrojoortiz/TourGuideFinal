@@ -25,7 +25,7 @@ public class Application {
 		return (args) -> {
 			// save a couple of customers
 			lugarRepository.save(new Lugar("La Catedral", "Edificio religioso","https://santanderspain.info/wp-content/uploads/2014/08/Catedral-de-Santander-686x1030.jpg"));
-			lugarRepository.save(new Lugar("Iglesia del Santísimo Cristo", "Edificio religioso"));
+			lugarRepository.save(new Lugar("Iglesia del Santísimo Cristo", "Edificio religioso","https://santanderspain.info/wp-content/uploads/2014/08/Iglesia-del-Cristo-1030x686.jpg"));
 			lugarRepository.save(new Lugar("Iglesia del Sagrado Corazón", "Edificio religioso"));
 			lugarRepository.save(new Lugar("Iglesia de la Consolación", "Edificio religioso"));
 			lugarRepository.save(new Lugar("Iglesia de Santa Lucía", "Edificio religioso"));

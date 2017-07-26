@@ -51,7 +51,7 @@ public class LugaresForm extends FormLayout {
 	final TextField filter;
 
 	private VaadinUI vaadinUI;
-	final ExternalResource externalResource;
+	//final ExternalResource externalResource;
 	private Image imagenWeb = new Image();
 
 	public LugaresForm(VaadinUI vaadinUI, LugarRepository repoLugar, LugarEditor lugarEditor) {
@@ -82,15 +82,15 @@ public class LugaresForm extends FormLayout {
 		this.setSizeUndefined(); // Shrink to fit
 		this.setMargin(true);
 		secundaryLayout1.addComponent(lugarEditor);
-		String urlImg="https://santanderspain.info/wp-content/uploads/2014/08/Catedral-de-Santander-686x1030.jpg";
+	//	String urlImg="https://santanderspain.info/wp-content/uploads/2014/08/Catedral-de-Santander-686x1030.jpg";
 		
-		externalResource = new ExternalResource(urlImg);
+	//	externalResource = new ExternalResource(urlImg);
 
-		imagenWeb.setSource(externalResource);
-		imagenWeb.setWidth("500px");
-		imagenWeb.setHeight("500px");
-		
-		secundaryLayout2.addComponent(imagenWeb);
+//		imagenWeb.setSource(externalResource);
+//		imagenWeb.setWidth("500px");
+//		imagenWeb.setHeight("500px");
+//		
+//		secundaryLayout2.addComponent(imagenWeb);
 
 		mainLayout.addComponents(secundaryLayout2);
 		this.addComponents(secundaryLayout2);

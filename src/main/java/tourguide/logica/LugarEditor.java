@@ -4,12 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.data.Binder;
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -25,15 +28,15 @@ import com.vaadin.ui.themes.ValoTheme;
  */
 @SpringComponent
 @UIScope
-public class LugarEditor extends VerticalLayout {
+public class LugarEditor extends HorizontalLayout {
 
-	public TextField getImagenRecurso() {
-		return imagenRecurso;
-	}
-
-	public void setImagenRecurso(TextField imagenRecurso) {
-		this.imagenRecurso = imagenRecurso;
-	}
+//	public TextField getImagenRecurso() {
+//		return imagenRecurso;
+//	}
+//
+//	public void setImagenRecurso(TextField imagenRecurso) {
+//		this.imagenRecurso = imagenRecurso;
+//	}
 
 	private final LugarRepository lugarRepository;
 
@@ -48,6 +51,8 @@ public class LugarEditor extends VerticalLayout {
 	
 	TextField imagenRecurso = new TextField("Imagen");
 	
+	Image imagenLugar=new Image();
+	
 	TextField direccion = new TextField("Dirección: ");
 
 	TextField telefono = new TextField("Teléfono: ");
@@ -61,12 +66,17 @@ public class LugarEditor extends VerticalLayout {
 	CssLayout actions = new CssLayout();
 
 	Binder<Lugar> binder = new Binder<>(Lugar.class);
+	
+	VerticalLayout layoutIzqda=new VerticalLayout();
+	
 
 	@Autowired
 	public LugarEditor(LugarRepository lugarRepository) {
 		this.lugarRepository = lugarRepository;
-
-		nombreLugar.setMaxLength(300);
+		
+		
+	
+		nombreLugar.setSizeFull();
 		nombreLugar.setReadOnly(true);
 		
 		tipo.setEnabled(false);
@@ -78,8 +88,11 @@ public class LugarEditor extends VerticalLayout {
 		descripcion.setEnabled(false);
 		descripcion.setSizeFull();
 		
+		layoutIzqda.addComponents(nombreLugar,tipo,imagenRecurso,direccion,telefono,horario,visitaGuiada,descripcion);
 		
-		addComponents(nombreLugar, tipo,imagenRecurso,direccion,telefono,horario,visitaGuiada,descripcion);
+		
+		addComponents(layoutIzqda,imagenLugar);
+		
 
 		// bind using naming convention
 		binder.bindInstanceFields(this);
@@ -87,7 +100,9 @@ public class LugarEditor extends VerticalLayout {
 		// Configure and style components
 		setSpacing(true);
 		actions.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
-	
+		
+		this.setSizeFull();
+		
 		setVisible(false);
 	}
 
@@ -105,7 +120,10 @@ public class LugarEditor extends VerticalLayout {
 		if (persisted) {
 			// Find fresh entity for editing
 			lugar = lugarRepository.findOne(l.getId());
-		}
+			if (lugar.getImagenRecurso().isEmpty()){lugar = lugarRepository.findOne(l.getId());}
+			else {String imgUrl=lugar.getImagenRecurso();
+			imagenLugar=setWeblImage(imgUrl,imagenLugar);}
+			}
 		else {
 			lugar = l;
 		}
@@ -131,4 +149,15 @@ public class LugarEditor extends VerticalLayout {
 //		delete.addClickListener(e -> h.onChange());
 //	}
 
+	private Image setWeblImage(String urlImg, Image imagenL) {
+		
+		ExternalResource externalResource = new ExternalResource(urlImg);
+
+		imagenL.setSource(externalResource);
+		imagenL.setWidth("500px");
+		imagenL.setHeight("500px");
+		return imagenL;
+	}
+	
+	
 }
