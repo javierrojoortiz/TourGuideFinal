@@ -80,7 +80,7 @@ public class Application {
 	}
 	
 	@Bean
-	public CommandLineRunner loadDataRestaurante(RestauranteRepository restauranteRepository) {
+	public CommandLineRunner loadDataRestaurantes(RestauranteRepository restauranteRepository) {
 		return (args) -> {
 			// save a couple of customers
 			restauranteRepository.save(new Restaurante("La Vinoteca", "Fusión"));
@@ -130,7 +130,7 @@ public class Application {
 			// fetch lugares by last name
 			log.info("Lugar found with findByTipoStartsWithIgnoreCase('Edificio religioso'):");
 			log.info("--------------------------------------------");
-			for (Restaurante restauranteItaliano: restauranteRepository.findByTipoStartsWithIgnoreCase("Italiana")) {
+			for (Restaurante restauranteItaliano: restauranteRepository.findByNombreStartsWithIgnoreCase("Italiana")) {
 				log.info(restauranteItaliano.toString());
 			}
 			log.info("");

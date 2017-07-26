@@ -65,9 +65,7 @@ public class LugarEditor extends VerticalLayout {
 	@Autowired
 	public LugarEditor(LugarRepository lugarRepository) {
 		this.lugarRepository = lugarRepository;
-		
-		
-	
+
 		nombreLugar.setMaxLength(300);
 		nombreLugar.setReadOnly(true);
 		

@@ -24,6 +24,7 @@ import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.ValueChangeMode;
+import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Grid;
@@ -75,6 +76,7 @@ public class LugaresForm extends FormLayout {
 
 		this.addComponent(actions);
 
+
 		this.addStyleName("mipanel de contenidos");
 		secundaryLayout1.addComponent(gridLugar);
 		this.setSizeUndefined(); // Shrink to fit
@@ -97,6 +99,7 @@ public class LugaresForm extends FormLayout {
 
 		gridLugar.setWidth(700, Unit.PIXELS);
 		gridLugar.setHeight(300, Unit.PIXELS);
+		gridLugar.setHeightMode( HeightMode.ROW );
 		gridLugar.setColumns("id", "nombreLugar", "tipo");
 
 		filter.setPlaceholder("Filtrar por tipo");
