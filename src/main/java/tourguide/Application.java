@@ -26,8 +26,8 @@ public class Application {
 			// save a couple of customers
 			lugarRepository.save(new Lugar("La Catedral", "Edificio religioso","https://santanderspain.info/wp-content/uploads/2014/08/Catedral-de-Santander-686x1030.jpg"));
 			lugarRepository.save(new Lugar("Iglesia del Santísimo Cristo", "Edificio religioso","https://santanderspain.info/wp-content/uploads/2014/08/Iglesia-del-Cristo-1030x686.jpg"));
-			lugarRepository.save(new Lugar("Iglesia del Sagrado Corazón", "Edificio religioso"));
-			lugarRepository.save(new Lugar("Iglesia de la Consolación", "Edificio religioso"));
+			lugarRepository.save(new Lugar("Iglesia del Sagrado Corazón", "Edificio religioso","https://santanderspain.info/wp-content/uploads/2014/08/Iglesia-Sagrado-Coraz%C3%B3n.jpg"));
+			lugarRepository.save(new Lugar("Iglesia de la Consolación", "Edificio religioso",null));
 			lugarRepository.save(new Lugar("Iglesia de Santa Lucía", "Edificio religioso"));
 			lugarRepository.save(new Lugar("Ermita de la Virgen del Mar", "Edificio religioso"));
 			lugarRepository.save(new Lugar("Iglesia de la Anunciación (La Compañía)", "Edificio religioso"));
