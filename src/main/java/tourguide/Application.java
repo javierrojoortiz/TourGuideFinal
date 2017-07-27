@@ -128,7 +128,7 @@ public class Application {
 			log.info("");
 
 			// fetch lugares by last name
-			log.info("Lugar found with findByTipoStartsWithIgnoreCase('Edificio religioso'):");
+			log.info("Lugar found with findByTipoStartsWithIgnoreCase('Italiana'):");
 			log.info("--------------------------------------------");
 			for (Restaurante restauranteItaliano: restauranteRepository.findByNombreStartsWithIgnoreCase("Italiana")) {
 				log.info(restauranteItaliano.toString());

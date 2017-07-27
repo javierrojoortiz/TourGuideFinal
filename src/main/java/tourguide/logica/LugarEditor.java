@@ -46,10 +46,7 @@ public class LugarEditor extends VerticalLayout {
 	private Lugar lugar;
 
 	/* Fields to edit properties in lugar entity */
-	TextField nombreLugar = new TextField();
 	TextField tipo = new TextField("Tipo");
-
-	TextField imagenRecurso = new TextField("Imagen");
 
 	Image imagenLugar = new Image();
 
@@ -73,12 +70,7 @@ public class LugarEditor extends VerticalLayout {
 	public LugarEditor(LugarRepository lugarRepository) {
 		this.lugarRepository = lugarRepository;
 
-		nombreLugar.setSizeFull();
-		
-		nombreLugar.setReadOnly(true);
-
 		tipo.setEnabled(false);
-		imagenRecurso.setEnabled(false);
 		direccion.setEnabled(false);
 		telefono.setEnabled(false);
 		horario.setEnabled(false);
@@ -86,9 +78,9 @@ public class LugarEditor extends VerticalLayout {
 		descripcion.setEnabled(false);
 		descripcion.setSizeFull();
 
-		addComponents(nombreLugar, imagenLugar);
+		addComponents(imagenLugar);
 
-		addComponents(layoutIzqda, tipo, imagenRecurso, direccion, telefono, horario, visitaGuiada,
+		addComponents(layoutIzqda, tipo, direccion, telefono, horario, visitaGuiada,
 				descripcion);
 
 		// bind using naming convention
@@ -141,7 +133,6 @@ public class LugarEditor extends VerticalLayout {
 		// A hack to ensure the whole form is visible
 		// save.focus();
 		// Select all text in nombreLugar field automatically
-		nombreLugar.selectAll();
 		return imgUrl;
 	}
 

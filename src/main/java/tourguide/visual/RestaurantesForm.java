@@ -62,7 +62,9 @@ public class RestaurantesForm extends FormLayout{
 		this.setSizeUndefined(); // Shrink to fit
 		this.setMargin(true);
 		secundaryLayout1.addComponent(restauranteEditor);
-		String urlImg="https://santanderspain.info/wp-content/uploads/2014/08/Catedral-de-Santander-686x1030.jpg";
+		String urlImg="https://www.tripadvisor.es/Restaurant_Review-g187484-d3686019-Reviews-La_Vinoteca-Santander_Cantabria.html#photos;"
+				+ "geo=187484&detail=3686019&ff=58067474&albumViewMode=hero&aggregationId=101&albumid=101&baseMediaId=58067474&"
+				+ "thumbnailMinWidth=50&cnt=30&offset=-1&filter=7&autoplay=";
 		
 		externalResource = new ExternalResource(urlImg);
 
