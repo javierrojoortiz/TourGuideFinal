@@ -24,33 +24,47 @@ public class Application {
 	public CommandLineRunner loadDataLugares(LugarRepository lugarRepository) {
 		return (args) -> {
 			// save a couple of customers
-			lugarRepository.save(new Lugar("La Catedral", "Edificio religioso","https://santanderspain.info/wp-content/uploads/2014/08/Catedral-de-Santander-686x1030.jpg"));
-			lugarRepository.save(new Lugar("Iglesia del Santísimo Cristo", "Edificio religioso","https://santanderspain.info/wp-content/uploads/2014/08/Iglesia-del-Cristo-1030x686.jpg"));
-			lugarRepository.save(new Lugar("Iglesia del Sagrado Corazón", "Edificio religioso","https://santanderspain.info/wp-content/uploads/2014/08/Iglesia-Sagrado-Coraz%C3%B3n.jpg"));
-			lugarRepository.save(new Lugar("Iglesia de la Consolación", "Edificio religioso",null));
-			lugarRepository.save(new Lugar("Iglesia de Santa Lucía", "Edificio religioso"));
-			lugarRepository.save(new Lugar("Ermita de la Virgen del Mar", "Edificio religioso"));
-			lugarRepository.save(new Lugar("Iglesia de la Anunciación (La Compañía)", "Edificio religioso"));
-			
-			lugarRepository.save(new Lugar("Palacio de La Magdalena", "Edificio singular"));
-			lugarRepository.save(new Lugar("Centro Botín", "Edificio singular"));
-			lugarRepository.save(new Lugar("Palacio de Festivales", "Edificio singular"));
-			lugarRepository.save(new Lugar("Biblioteca de Menéndez Pelayo", "Edificio singular"));
-			lugarRepository.save(new Lugar("Gran Casino", "Edificio singular"));
-			lugarRepository.save(new Lugar("Mercado de La Esperanza", "Edificio singular"));
-			
-			lugarRepository.save(new Lugar("Museo de Prehistoria y Arqueología de Cantabria", "Museo - Galería"));
-			lugarRepository.save(new Lugar("Biblioteca de Menéndez Pelayo", "Museo - Galería"));
-			lugarRepository.save(new Lugar("Casa – Museo de Menéndez Pelayo", "Museo - Galería"));
-			lugarRepository.save(new Lugar("Museo de Arte Moderno y Contemporáneo de Santander y Cantabria", "Museo - Galería"));
-			lugarRepository.save(new Lugar("Museo Marítimo del Cantábrico", "Museo - Galería"));
-					
-			lugarRepository.save(new Lugar("Los Peligros", "Playas"));
-			lugarRepository.save(new Lugar("La Magdalena", "Playas"));
-			lugarRepository.save(new Lugar("Bikinis", "Playas"));
-			lugarRepository.save(new Lugar("El Camello", "Playas"));
-			lugarRepository.save(new Lugar("La Concha", "Playas"));
-			lugarRepository.save(new Lugar("El Sardinero", "Playas"));
+			lugarRepository.save(new Lugar("La Catedral", "Edificio religioso",
+					"https://santanderspain.info/wp-content/uploads/2014/08/Catedral-de-Santander-686x1030.jpg",
+					"Avda me la invento NA" , "942 20 21 22", "10:00 - 20:00", false ,
+					"Una catedral muy bonita lalalala y demas "));
+			lugarRepository.save(new Lugar("Iglesia del Santísimo Cristo", "Edificio religioso",
+					"https://santanderspain.info/wp-content/uploads/2014/08/Iglesia-del-Cristo-1030x686.jpg",
+					"C/ Menendez Pelayo 21", "942 20 21 22", "09:30 - 14:00", true,
+					"Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
+					+ "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+					+ "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris"
+					+ " nisi ut aliquip ex ea commodo consequat."));
+			lugarRepository.save(new Lugar("Iglesia del Sagrado Corazón", "Edificio religioso",
+					"https://santanderspain.info/wp-content/uploads/2014/08/Iglesia-Sagrado-Coraz%C3%B3n.jpg",
+					"C/Juan Luis de Espinoza 44","942 20 21 22","10:30 - 15:00",false,
+					"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod "
+					+ "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
+					+ " quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."));
+//			lugarRepository.save(new Lugar("Iglesia de la Consolación", "Edificio religioso",null));
+//			lugarRepository.save(new Lugar("Iglesia de Santa Lucía", "Edificio religioso"));
+//			lugarRepository.save(new Lugar("Ermita de la Virgen del Mar", "Edificio religioso"));
+//			lugarRepository.save(new Lugar("Iglesia de la Anunciación (La Compañía)", "Edificio religioso"));
+//			
+//			lugarRepository.save(new Lugar("Palacio de La Magdalena", "Edificio singular"));
+//			lugarRepository.save(new Lugar("Centro Botín", "Edificio singular"));
+//			lugarRepository.save(new Lugar("Palacio de Festivales", "Edificio singular"));
+//			lugarRepository.save(new Lugar("Biblioteca de Menéndez Pelayo", "Edificio singular"));
+//			lugarRepository.save(new Lugar("Gran Casino", "Edificio singular"));
+//			lugarRepository.save(new Lugar("Mercado de La Esperanza", "Edificio singular"));
+//			
+//			lugarRepository.save(new Lugar("Museo de Prehistoria y Arqueología de Cantabria", "Museo - Galería"));
+//			lugarRepository.save(new Lugar("Biblioteca de Menéndez Pelayo", "Museo - Galería"));
+//			lugarRepository.save(new Lugar("Casa – Museo de Menéndez Pelayo", "Museo - Galería"));
+//			lugarRepository.save(new Lugar("Museo de Arte Moderno y Contemporáneo de Santander y Cantabria", "Museo - Galería"));
+//			lugarRepository.save(new Lugar("Museo Marítimo del Cantábrico", "Museo - Galería"));
+//					
+//			lugarRepository.save(new Lugar("Los Peligros", "Playas"));
+//			lugarRepository.save(new Lugar("La Magdalena", "Playas"));
+//			lugarRepository.save(new Lugar("Bikinis", "Playas"));
+//			lugarRepository.save(new Lugar("El Camello", "Playas"));
+//			lugarRepository.save(new Lugar("La Concha", "Playas"));
+//			lugarRepository.save(new Lugar("El Sardinero", "Playas"));
 			
 
 			// fetch all lugares

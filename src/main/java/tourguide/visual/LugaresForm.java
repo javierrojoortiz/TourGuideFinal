@@ -53,10 +53,8 @@ public class LugaresForm extends FormLayout {
 	
 	private VaadinUI vaadinUI;
 	private ExternalResource externalResource;
-	private Image imagenWeb = new Image();
 	private String urlImg = "";
 	
-	private Label lbNombre=new Label();
 	
 	public LugaresForm(VaadinUI vaadinUI, LugarRepository repoLugar, LugarEditor lugarEditor) {
 		this.vaadinUI = vaadinUI;
@@ -69,8 +67,7 @@ public class LugaresForm extends FormLayout {
 
 		HorizontalLayout actions = new HorizontalLayout(filter);
 		HorizontalLayout mainLayout = new HorizontalLayout(panelLugar);
-		VerticalLayout secundaryLayout1 = new VerticalLayout();
-		HorizontalLayout secundaryLayout2 = new HorizontalLayout(secundaryLayout1, imagenWeb);
+		HorizontalLayout secundaryLayout2 = new HorizontalLayout();
 		setParent(mainLayout);
 
 		panelLugar.addStyleName("mypanelexample");
@@ -81,11 +78,11 @@ public class LugaresForm extends FormLayout {
 		this.addComponent(actions);
 
 		this.addStyleName("mipanel de contenidos");
-		secundaryLayout1.addComponent(gridLugar);
+		secundaryLayout2.addComponent(gridLugar);
 		this.setSizeUndefined(); // Shrink to fit
 		this.setMargin(true);
 		lugarEditor.setSizeFull();
-		secundaryLayout1.addComponent(lugarEditor);
+		secundaryLayout2.addComponent(lugarEditor);
 
 		panelLugar.setContent(this);
 
@@ -104,15 +101,8 @@ public class LugaresForm extends FormLayout {
 
 		// Connect selected Customer to editor or hide if none is selected
 		gridLugar.asSingleSelect().addValueChangeListener(e -> {
-			urlImg = lugarEditor.editLugar(e.getValue());
-
-			externalResource = new ExternalResource(urlImg);
-			imagenWeb = setWeblImage(urlImg, imagenWeb);
-			lbNombre.setValue(e.getValue().getNombreLugar());
-			
+			lugarEditor.editLugar(e.getValue());	
 		});
-
-		secundaryLayout2.addComponents(lbNombre,imagenWeb);
 		mainLayout.addComponents(secundaryLayout2);
 		this.addComponents(secundaryLayout2);
 

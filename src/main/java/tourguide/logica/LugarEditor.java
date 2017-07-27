@@ -13,6 +13,8 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -46,42 +48,41 @@ public class LugarEditor extends VerticalLayout {
 	private Lugar lugar;
 
 	/* Fields to edit properties in lugar entity */
-	TextField tipo = new TextField("Tipo");
+	
+	VerticalLayout descripcionItem = new VerticalLayout();
+	HorizontalLayout panelItem = new HorizontalLayout();
+	
+	Label nombreLugar = new Label();
+	
+	Label tipo = new Label();
 
 	Image imagenLugar = new Image();
 
-	TextField direccion = new TextField("Dirección: ");
+	Label direccion = new Label();
 
-	TextField telefono = new TextField("Teléfono: ");
+	Label telefono = new Label();
 
-	TextField horario = new TextField("Horario de apertura: ");
+	Label horario = new Label();
 
 	CheckBox visitaGuiada = new CheckBox("¿Tiene visitas guiadas?");
 
-	TextField descripcion = new TextField("Descripción");
+	Label descripcion = new Label();
 
 	CssLayout actions = new CssLayout();
 
 	Binder<Lugar> binder = new Binder<>(Lugar.class);
 
-	VerticalLayout layoutIzqda = new VerticalLayout();
-
 	@Autowired
 	public LugarEditor(LugarRepository lugarRepository) {
 		this.lugarRepository = lugarRepository;
 
-		tipo.setEnabled(false);
-		direccion.setEnabled(false);
-		telefono.setEnabled(false);
-		horario.setEnabled(false);
-		visitaGuiada.setEnabled(false);
-		descripcion.setEnabled(false);
+		nombreLugar.setSizeFull();
 		descripcion.setSizeFull();
+		
+		descripcionItem.addComponents(nombreLugar,tipo,direccion,telefono,horario,visitaGuiada, descripcion);
+		panelItem.addComponents(imagenLugar,descripcionItem);
 
-		addComponents(imagenLugar);
-
-		addComponents(layoutIzqda, tipo, direccion, telefono, horario, visitaGuiada,
-				descripcion);
+		addComponents(panelItem);
 
 		// bind using naming convention
 		binder.bindInstanceFields(this);
@@ -100,40 +101,35 @@ public class LugarEditor extends VerticalLayout {
 		void onChange();
 	}
 
-	public String editLugar(Lugar l) {
-		if (l == null) {
-			setVisible(false);
-		//	return;
-		}
-		final boolean persisted = l.getId() != null;
-		final boolean tieneImagen = l.getImagenRecurso() != null;
-		String imgUrl="";
-		
-		if (persisted) {
-			// Find fresh entity for editing
-			lugar = lugarRepository.findOne(l.getId());
-			if (tieneImagen) {
-				imgUrl = lugar.getImagenRecurso();
-				imagenLugar = setWeblImage(imgUrl, imagenLugar);
-				imagenLugar.setVisible(true);
-			}else {imagenLugar.setVisible(false);}
+	public void editLugar(Lugar lugarNuevo) {
 
-		} else {
-			lugar = l;
-		}
+		
+		lugar = lugarNuevo;
+		String imgUrl = lugar.getImagenRecurso();
+		imagenLugar = setWeblImage(imgUrl, imagenLugar);
+		imagenLugar.setVisible(true);
+
+			
 		// cancel.setVisible(persisted);
 
 		// Bind lugar properties to similarly named fields
 		// Could also use annotation or "manual binding" or programmatically
 		// moving values from fields to entities before saving
 		binder.setBean(lugar);
+		
+		//Seteamos valores a mostrar antes de que sea visible
+	
+		nombreLugar.setValue(lugarNuevo.getNombreLugar());
+		tipo.setValue(lugarNuevo.getTipo());
+		direccion.setValue("Dirección: " + lugarNuevo.getDireccion());
+		telefono.setValue("Contacto: " + lugarNuevo.getTelefono());
+		horario.setValue("Horario: " + lugarNuevo.getHorario());
+		descripcion.setValue(lugarNuevo.getDescripcion());
+		descripcion.setWidth("300px");
+		visitaGuiada.setValue(lugarNuevo.isVisitaGuiada());
+		visitaGuiada.setEnabled(false);
 
 		setVisible(true);
-
-		// A hack to ensure the whole form is visible
-		// save.focus();
-		// Select all text in nombreLugar field automatically
-		return imgUrl;
 	}
 
 	// public void setChangeHandler(ChangeHandler h) {

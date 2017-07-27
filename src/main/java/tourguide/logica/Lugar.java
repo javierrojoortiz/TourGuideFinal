@@ -29,15 +29,15 @@ public class Lugar {
 	
 	private String descripcion;
 
-	protected Lugar() {
+	public Lugar() {
 	}
-
-	public Lugar(String nombreLugar, String tipo) {
-		this.nombreLugar = nombreLugar;
-		this.tipo = tipo;
-	}
-	
-	public Lugar(String nombreLugar, String tipo,String imagenRecurso) {
+	public Lugar(String nombreLugar, String tipo,String imagenRecurso,String direccion,
+			String telefono, String horario, boolean visitaGuiada, String descripcion) {
+		this.descripcion = descripcion;
+		this.horario = horario;
+		this.telefono = telefono;
+		this.direccion = direccion;
+		this.visitaGuiada = visitaGuiada;	
 		this.nombreLugar = nombreLugar;
 		this.tipo = tipo;
 		this.imagenRecurso=imagenRecurso;
