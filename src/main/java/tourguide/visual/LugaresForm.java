@@ -67,7 +67,6 @@ public class LugaresForm extends FormLayout {
 
 		HorizontalLayout actions = new HorizontalLayout(filter);
 		HorizontalLayout mainLayout = new HorizontalLayout(panelLugar);
-		VerticalLayout secundaryLayout1 = new VerticalLayout();
 		HorizontalLayout secundaryLayout2 = new HorizontalLayout();
 		setParent(mainLayout);
 
