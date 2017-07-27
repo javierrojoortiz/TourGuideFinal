@@ -20,6 +20,8 @@ public class Restaurante {
 	
 	private String telefono;
 	
+	private double latitud;
+	private double longitud;
 	
 	public Restaurante(String nombre, String tipo) {
 		this.nombre = nombre;
@@ -74,6 +76,22 @@ public class Restaurante {
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
+	}
+
+	public double getLatitud() {
+		return latitud;
+	}
+
+	public void setLatitud(double latitud) {
+		this.latitud = latitud;
+	}
+
+	public double getLongitud() {
+		return longitud;
+	}
+
+	public void setLongitud(double longitud) {
+		this.longitud = longitud;
 	}
 	
 	

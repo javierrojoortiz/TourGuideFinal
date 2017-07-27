@@ -7,6 +7,9 @@ import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.tapio.googlemaps.GoogleMap;
+import com.vaadin.tapio.googlemaps.client.LatLon;
+import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapMarker;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CssLayout;
@@ -27,7 +30,7 @@ public class RestauranteEditor extends VerticalLayout{
 	private Restaurante restaurante;
 
 	/* Fields to edit properties in lugar entity */
-	TextField nombre = new TextField("Nombre del Lugar");
+	TextField nombre = new TextField("Nombre del restaurante");
 	TextField tipo = new TextField("Tipo");
 	
 	TextField imagenRecurso = new TextField("Imagen");
@@ -45,6 +48,9 @@ public class RestauranteEditor extends VerticalLayout{
 	CssLayout actions = new CssLayout();
 
 	Binder<Restaurante> binder = new Binder<>(Restaurante.class);
+	
+	private GoogleMap ubicacion = new GoogleMap(null, null,null);
+	private GoogleMapMarker marcador;
 
 	@Autowired
 	public RestauranteEditor(RestauranteRepository restauranteRepository) {
@@ -63,6 +69,8 @@ public class RestauranteEditor extends VerticalLayout{
 		visitaGuiada.setEnabled(false);
 		descripcion.setEnabled(false);
 		descripcion.setSizeFull();
+		
+		ubicacion.setEnabled(false);
 		
 		
 		addComponents(nombre, tipo,imagenRecurso,direccion,telefono,horario,visitaGuiada,descripcion);
@@ -85,15 +93,20 @@ public class RestauranteEditor extends VerticalLayout{
 		if (persisted) {
 			// Find fresh entity for editing
 			restaurante = restauranteRepository.findOne(r.getId());
+			
+			ubicacion.setCenter(new LatLon(r.getLatitud(),r.getLongitud()));
+			ubicacion.setZoom(18);
+			ubicacion.setSizeFull();
+			marcador = new GoogleMapMarker();
+			marcador.setPosition(new LatLon(r.getLatitud(),r.getLongitud()));
+			
 		}
 		else {
 			restaurante = r;
 		}
 //		cancel.setVisible(persisted);
-
-		// Bind lugar properties to similarly named fields
-		// Could also use annotation or "manual binding" or programmatically
-		// moving values from fields to entities before saving
+		
+		
 		binder.setBean(restaurante);
 
 		setVisible(true);
