@@ -24,11 +24,13 @@ import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.ValueChangeMode;
+import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
@@ -48,11 +50,14 @@ public class LugaresForm extends FormLayout {
 	final Grid<Lugar> gridLugar;
 
 	final TextField filter;
-
+	
 	private VaadinUI vaadinUI;
-	final ExternalResource externalResource;
+	private ExternalResource externalResource;
 	private Image imagenWeb = new Image();
-
+	private String urlImg = "";
+	
+	private Label lbNombre=new Label();
+	
 	public LugaresForm(VaadinUI vaadinUI, LugarRepository repoLugar, LugarEditor lugarEditor) {
 		this.vaadinUI = vaadinUI;
 		this.repoLugar = repoLugar;
@@ -65,7 +70,7 @@ public class LugaresForm extends FormLayout {
 		HorizontalLayout actions = new HorizontalLayout(filter);
 		HorizontalLayout mainLayout = new HorizontalLayout(panelLugar);
 		VerticalLayout secundaryLayout1 = new VerticalLayout();
-		HorizontalLayout secundaryLayout2 = new HorizontalLayout(secundaryLayout1,imagenWeb);
+		HorizontalLayout secundaryLayout2 = new HorizontalLayout(secundaryLayout1, imagenWeb);
 		setParent(mainLayout);
 
 		panelLugar.addStyleName("mypanelexample");
@@ -79,24 +84,14 @@ public class LugaresForm extends FormLayout {
 		secundaryLayout1.addComponent(gridLugar);
 		this.setSizeUndefined(); // Shrink to fit
 		this.setMargin(true);
+		lugarEditor.setSizeFull();
 		secundaryLayout1.addComponent(lugarEditor);
-		String urlImg="https://santanderspain.info/wp-content/uploads/2014/08/Catedral-de-Santander-686x1030.jpg";
-		
-		externalResource = new ExternalResource(urlImg);
-
-		imagenWeb.setSource(externalResource);
-		imagenWeb.setWidth("500px");
-		imagenWeb.setHeight("500px");
-		
-		secundaryLayout2.addComponent(imagenWeb);
-
-		mainLayout.addComponents(secundaryLayout2);
-		this.addComponents(secundaryLayout2);
 
 		panelLugar.setContent(this);
 
 		gridLugar.setWidth(700, Unit.PIXELS);
-		gridLugar.setHeight(300, Unit.PIXELS);
+		gridLugar.setHeight(600, Unit.PIXELS);
+		gridLugar.setHeightMode(HeightMode.ROW);
 		gridLugar.setColumns("id", "nombreLugar", "tipo");
 
 		filter.setPlaceholder("Filtrar por tipo");
@@ -109,8 +104,17 @@ public class LugaresForm extends FormLayout {
 
 		// Connect selected Customer to editor or hide if none is selected
 		gridLugar.asSingleSelect().addValueChangeListener(e -> {
-			lugarEditor.editLugar(e.getValue());
+			urlImg = lugarEditor.editLugar(e.getValue());
+
+			externalResource = new ExternalResource(urlImg);
+			imagenWeb = setWeblImage(urlImg, imagenWeb);
+			lbNombre.setValue(e.getValue().getNombreLugar());
+			
 		});
+
+		secundaryLayout2.addComponents(lbNombre,imagenWeb);
+		mainLayout.addComponents(secundaryLayout2);
+		this.addComponents(secundaryLayout2);
 
 		// Initialize listing
 		listLugares(null);
@@ -120,12 +124,23 @@ public class LugaresForm extends FormLayout {
 	// private final Command menuCommand = selectedItem -> selectedItem.getText();
 
 	// tag::listLugares[]
+
 	void listLugares(String filterText) {
 		if (StringUtils.isEmpty(filterText)) {
 			gridLugar.setItems(repoLugar.findAll());
 		} else {
 			gridLugar.setItems(repoLugar.findByTipoStartsWithIgnoreCase(filterText));
 		}
+	}
+
+	private Image setWeblImage(String urlImg, Image imagenL) {
+
+		ExternalResource externalResource = new ExternalResource(urlImg);
+
+		imagenL.setSource(externalResource);
+		imagenL.setWidth("500px");
+		imagenL.setHeight("500px");
+		return imagenL;
 	}
 
 }

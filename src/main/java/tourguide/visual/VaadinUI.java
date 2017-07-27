@@ -36,6 +36,8 @@ import tourguide.logica.HotelRepository;
 import tourguide.logica.Lugar;
 import tourguide.logica.LugarEditor;
 import tourguide.logica.LugarRepository;
+import tourguide.logica.RestauranteEditor;
+import tourguide.logica.RestauranteRepository;
 
 @SpringUI
 public class VaadinUI extends UI {
@@ -47,6 +49,9 @@ public class VaadinUI extends UI {
 	private final LugarRepository repoLugar;
 
 	private final LugarEditor lugarEditor;
+	
+	private final RestauranteEditor restauranteEditor;
+	private final RestauranteRepository repoRestaurante;
 
 	Logger logger = Logger.getLogger(VaadinUI.class);
 	LugaresForm lugares;
@@ -54,13 +59,16 @@ public class VaadinUI extends UI {
 	RestaurantesForm restaurantes;
 	
 	@Autowired
-	public VaadinUI(LugarRepository repoLugar, LugarEditor lugarEditor) {
+	public VaadinUI(LugarRepository repoLugar, LugarEditor lugarEditor,
+			RestauranteEditor restauranteEditor, RestauranteRepository repoRestaurante) {
+		this.repoRestaurante = repoRestaurante;
+		this.restauranteEditor = restauranteEditor;
 		this.repoLugar = repoLugar;
 		this.lugarEditor = lugarEditor;
 		this.menubar = new MenuBar();
 		lugares = new LugaresForm(this,repoLugar, lugarEditor);
 		hoteles = new HotelesForm(this);
-		restaurantes = new RestaurantesForm(this);
+		restaurantes = new RestaurantesForm(this, repoRestaurante, restauranteEditor);
 		
 	}
 
@@ -97,6 +105,7 @@ public class VaadinUI extends UI {
 		MenuBar.Command commandInicio = new MenuBar.Command() {
 			public void menuSelected(MenuItem selectedItem) {
 				img_inicio.setVisible(true);
+				lugares.setVisible(false);
 			}
 		};
 
