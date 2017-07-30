@@ -28,11 +28,27 @@ public class Lugar {
 	private boolean visitaGuiada;
 	
 	private String descripcion;
+	
+	private Double latitud;
+	
+	private Double longitud;
 
+	public Double getLatitud() {
+		return latitud;
+	}
+	public void setLatitud(Double latitud) {
+		this.latitud = latitud;
+	}
+	public Double getLongitud() {
+		return longitud;
+	}
+	public void setLongitud(Double longitud) {
+		this.longitud = longitud;
+	}
 	public Lugar() {
 	}
 	public Lugar(String nombreLugar, String tipo,String imagenRecurso,String direccion,
-			String telefono, String horario, boolean visitaGuiada, String descripcion) {
+			String telefono, String horario, boolean visitaGuiada, String descripcion, double latitud, double longitud) {
 		this.descripcion = descripcion;
 		this.horario = horario;
 		this.telefono = telefono;
@@ -41,6 +57,8 @@ public class Lugar {
 		this.nombreLugar = nombreLugar;
 		this.tipo = tipo;
 		this.imagenRecurso=imagenRecurso;
+		this.latitud=latitud;
+		this.longitud=longitud;
 	}
 
 	public Long getId() {

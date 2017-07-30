@@ -2,20 +2,27 @@ package tourguide.visual;
 
 import java.io.File;
 
+import javax.servlet.annotation.WebServlet;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
+import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinService;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.spring.annotation.SpringUI;
+import com.vaadin.tapio.googlemaps.GoogleMap;
+import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapInfoWindow;
+import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapMarker;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Grid;
@@ -38,6 +45,10 @@ import tourguide.logica.LugarEditor;
 import tourguide.logica.LugarRepository;
 import tourguide.logica.RestauranteEditor;
 import tourguide.logica.RestauranteRepository;
+
+
+
+
 
 @SpringUI
 public class VaadinUI extends UI {
@@ -65,12 +76,16 @@ public class VaadinUI extends UI {
 		this.repoLugar = repoLugar;
 		this.lugarEditor = lugarEditor;
 		this.menubar = new MenuBar();
-		lugares = new LugaresForm(this,repoLugar, lugarEditor);
+		
+			lugares = new LugaresForm(this,repoLugar, lugarEditor);
+		
 		hoteles = new HotelesForm(this);
 		restaurantes = new RestaurantesForm(this, repoRestaurante, restauranteEditor);
 		
 	}
 
+	
+	
 	@Override
 	protected void init(VaadinRequest request) {
 		HorizontalLayout menubarLayout = new HorizontalLayout(menubar);

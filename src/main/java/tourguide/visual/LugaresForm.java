@@ -11,15 +11,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.imageio.ImageIO;
+import javax.servlet.annotation.WebServlet;
 
 import org.springframework.util.StringUtils;
 
+import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.ClassResource;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.server.VaadinService;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.ThemeResource;
@@ -35,7 +38,28 @@ import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import java.util.ArrayList;
+import javax.servlet.annotation.WebServlet;
 
+import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinServlet;
+import com.vaadin.tapio.googlemaps.GoogleMap;
+import com.vaadin.tapio.googlemaps.client.GoogleMapControl;
+import com.vaadin.tapio.googlemaps.client.LatLon;
+import com.vaadin.tapio.googlemaps.client.events.InfoWindowClosedListener;
+import com.vaadin.tapio.googlemaps.client.events.MapClickListener;
+import com.vaadin.tapio.googlemaps.client.events.MapMoveListener;
+import com.vaadin.tapio.googlemaps.client.events.MarkerClickListener;
+import com.vaadin.tapio.googlemaps.client.events.MarkerDragListener;
+import com.vaadin.tapio.googlemaps.client.layers.GoogleMapKmlLayer;
+import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapInfoWindow;
+import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapMarker;
+import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapPolygon;
+import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapPolyline;
+
+import com.vaadin.ui.*;
+import com.vaadin.ui.Button.ClickEvent;
 import tourguide.logica.Lugar;
 import tourguide.logica.LugarEditor;
 import tourguide.logica.LugarRepository;
@@ -55,6 +79,11 @@ public class LugaresForm extends FormLayout {
 	private ExternalResource externalResource;
 	private String urlImg = "";
 	
+	@WebServlet(value = "/*", asyncSupported = true)
+	@VaadinServletConfiguration(productionMode = false, ui = VaadinUI.class, widgetset = "")
+
+	public static class Servlet extends VaadinServlet {
+	}
 	
 	public LugaresForm(VaadinUI vaadinUI, LugarRepository repoLugar, LugarEditor lugarEditor) {
 		this.vaadinUI = vaadinUI;
@@ -101,7 +130,8 @@ public class LugaresForm extends FormLayout {
 
 		// Connect selected Customer to editor or hide if none is selected
 		gridLugar.asSingleSelect().addValueChangeListener(e -> {
-			lugarEditor.editLugar(e.getValue());	
+			lugarEditor.editLugar(e.getValue());
+			lugarEditor.setVisible(isVisible());
 		});
 		mainLayout.addComponents(secundaryLayout2);
 		this.addComponents(secundaryLayout2);
