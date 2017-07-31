@@ -1,15 +1,9 @@
 package tourguide.logica;
 
-import javax.servlet.annotation.WebServlet;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.data.Binder;
-import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.ExternalResource;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.server.VaadinServlet;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.tapio.googlemaps.GoogleMap;
@@ -21,34 +15,9 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.TextArea;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-import tourguide.visual.VaadinUI;
-import java.util.ArrayList;
-import javax.servlet.annotation.WebServlet;
-
-import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinServlet;
-import com.vaadin.tapio.googlemaps.GoogleMap;
-import com.vaadin.tapio.googlemaps.client.GoogleMapControl;
-import com.vaadin.tapio.googlemaps.client.LatLon;
-import com.vaadin.tapio.googlemaps.client.events.InfoWindowClosedListener;
-import com.vaadin.tapio.googlemaps.client.events.MapClickListener;
-import com.vaadin.tapio.googlemaps.client.events.MapMoveListener;
-import com.vaadin.tapio.googlemaps.client.events.MarkerClickListener;
-import com.vaadin.tapio.googlemaps.client.events.MarkerDragListener;
-import com.vaadin.tapio.googlemaps.client.layers.GoogleMapKmlLayer;
-import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapInfoWindow;
-import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapMarker;
-import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapPolygon;
-import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapPolyline;
-
-import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
 /**
  * A simple example to introduce building forms. As your real application is
  * probably much more complicated than this example, you could re-use this form
@@ -76,6 +45,7 @@ public class LugarEditor extends VerticalLayout {
 	VerticalLayout descripcionItem = new VerticalLayout();
 	HorizontalLayout panelItem = new HorizontalLayout();
 	HorizontalLayout panelMapa = new HorizontalLayout();
+	VerticalLayout panelGeneral = new VerticalLayout();
 	Label nombreLugar = new Label();
 	
 	Label tipo = new Label();
@@ -113,10 +83,12 @@ public class LugarEditor extends VerticalLayout {
 		descripcion.setSizeFull();
 		ubicacion.setEnabled(false);
 		panelMapa.addComponent(ubicacion);
-		descripcionItem.addComponents(nombreLugar,tipo,direccion,telefono,horario,visitaGuiada, descripcion,panelMapa);
+		descripcionItem.addComponents(nombreLugar,tipo,direccion,telefono,horario,visitaGuiada, descripcion);
 		panelItem.addComponents(imagenLugar,descripcionItem);
+		panelMapa.setWidth("100%");
+		panelGeneral.addComponents(panelItem,panelMapa);
 
-		addComponents(panelItem);
+		addComponents(panelGeneral);
 
 		// bind using naming convention
 		binder.bindInstanceFields(this);

@@ -15,29 +15,16 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinService;
-import com.vaadin.server.VaadinServlet;
-import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.server.ThemeResource;
-import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.spring.annotation.SpringUI;
-import com.vaadin.tapio.googlemaps.GoogleMap;
-import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapInfoWindow;
-import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapMarker;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.Grid;
+
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.MenuBar;
-import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.TextField;
+
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-import tourguide.logica.Hotel;
 import tourguide.logica.HotelEditor;
 import tourguide.logica.HotelRepository;
 import tourguide.logica.Lugar;
@@ -62,6 +49,9 @@ public class VaadinUI extends UI {
 	
 	private final RestauranteEditor restauranteEditor;
 	private final RestauranteRepository repoRestaurante;
+	
+	private final HotelRepository repoHotel;
+	private final HotelEditor hotelEditor;
 
 	Logger logger = Logger.getLogger(VaadinUI.class);
 	LugaresForm lugares;
@@ -70,16 +60,18 @@ public class VaadinUI extends UI {
 	
 	@Autowired
 	public VaadinUI(LugarRepository repoLugar, LugarEditor lugarEditor,
-			RestauranteEditor restauranteEditor, RestauranteRepository repoRestaurante) {
+			RestauranteEditor restauranteEditor, RestauranteRepository repoRestaurante,
+			HotelEditor hotelEditor, HotelRepository repoHotel) {
 		this.repoRestaurante = repoRestaurante;
 		this.restauranteEditor = restauranteEditor;
 		this.repoLugar = repoLugar;
 		this.lugarEditor = lugarEditor;
+		this.hotelEditor = hotelEditor;
+		this.repoHotel = repoHotel;
 		this.menubar = new MenuBar();
 		
-			lugares = new LugaresForm(this,repoLugar, lugarEditor);
-		
-		hoteles = new HotelesForm(this);
+		lugares = new LugaresForm(this,repoLugar, lugarEditor);
+		hoteles = new HotelesForm(this,repoHotel, hotelEditor);
 		restaurantes = new RestaurantesForm(this, repoRestaurante, restauranteEditor);
 		
 	}
@@ -103,6 +95,7 @@ public class VaadinUI extends UI {
 				lugares.setVisible(true);
 				img_inicio.setVisible(false);
 				restaurantes.setVisible(false);
+				hoteles.setVisible(false);
 			}
 		};
 		
@@ -112,6 +105,7 @@ public class VaadinUI extends UI {
 				restaurantes.setVisible(true);
 				img_inicio.setVisible(false);
 				lugares.setVisible(false);
+				hoteles.setVisible(false);
 				
 			}
 		};
@@ -120,12 +114,23 @@ public class VaadinUI extends UI {
 			public void menuSelected(MenuItem selectedItem) {
 				img_inicio.setVisible(true);
 				lugares.setVisible(false);
+				hoteles.setVisible(false);
+				restaurantes.setVisible(false);
+			}
+		};
+		MenuBar.Command commandHotel = new MenuBar.Command() {
+			public void menuSelected(MenuItem selectedItem) {
+				ini.addComponent(hoteles);
+				img_inicio.setVisible(false);
+				lugares.setVisible(false);
+				restaurantes.setVisible(false);
+				hoteles.setVisible(true);
 			}
 		};
 
 		menubar.setWidth(100.0f, Unit.PERCENTAGE);
 		menubar.addItem("Inicio", VaadinIcons.HOME , commandInicio);
-		menubar.addItem("Hoteles", null, null);
+		menubar.addItem("Hoteles", null, commandHotel);
 		menubar.addItem("Restaurantes", null, commandVerPanelRestaurante);
 		menubar.addItem("Lugares", null, commandVerPanelLugar);
 	

@@ -131,6 +131,7 @@ public class LugaresForm extends FormLayout {
 		// Connect selected Customer to editor or hide if none is selected
 		gridLugar.asSingleSelect().addValueChangeListener(e -> {
 			lugarEditor.editLugar(e.getValue());
+			lugarEditor.setHeight("800px");
 			lugarEditor.setVisible(isVisible());
 		});
 		mainLayout.addComponents(secundaryLayout2);

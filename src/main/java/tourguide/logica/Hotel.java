@@ -21,12 +21,31 @@ public class Hotel {
 	
 	private String descripcion;
 	
-	private int km_playa;
+	private String imagenRecurso;
+	
+	private double km_playa;
 	
 	private double precio_medio_noche;
+	
+	private double latitud;
 
-	protected Hotel() {
+	private double longitud;
+
+	public Hotel() {
 		
+	}
+	
+	public Hotel(String nombre, double km_playa,String imagenRecurso,String direccion,
+			int estrellas, int valoracion, String descripcion, double latitud, double longitud) {
+		this.descripcion = descripcion;
+		this.valoracion = valoracion;
+		this.estrellas = estrellas;
+		this.direccion = direccion;
+		this.nombre = nombre;
+		this.km_playa = km_playa;
+		this.imagenRecurso=imagenRecurso;
+		this.latitud=latitud;
+		this.longitud=longitud;
 	}
 	
 	public Long getId() {
@@ -101,13 +120,13 @@ public class Hotel {
 
 
 
-	public int getKm_playa() {
+	public double getKm_playa() {
 		return km_playa;
 	}
 
 
 
-	public void setKm_playa(int km_playa) {
+	public void setKm_playa(double km_playa) {
 		this.km_playa = km_playa;
 	}
 
@@ -123,12 +142,35 @@ public class Hotel {
 		this.precio_medio_noche = precio_medio_noche;
 	}
 
+	public double getLatitud() {
+		return latitud;
+	}
+
+	public void setLatitud(double latitud) {
+		this.latitud = latitud;
+	}
+
+	public double getLongitud() {
+		return longitud;
+	}
+
+	public void setLongitud(double longitud) {
+		this.longitud = longitud;
+	}
+
 
 
 	@Override
 	public String toString() {
 		return String.format("Hotel: '%s'\n Direccion: '%s'\n",
 				nombre, direccion);
+	}
+	public String getImagenRecurso() {
+		return imagenRecurso;
+	}
+
+	public void setImagenRecurso(String imagenRecurso) {
+		this.imagenRecurso = imagenRecurso;
 	}
 
 }

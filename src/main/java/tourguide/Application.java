@@ -23,7 +23,10 @@ public class Application {
 	@Bean
 	public CommandLineRunner loadDataLugares(LugarRepository lugarRepository) {
 		return (args) -> {
-			// save a couple of customers
+			//hotelRepository.save(new Hotel("Hotel Real",1.24,"https://santanderspain.info/wp-content/uploads/2014/08/Catedral-de-Santander-686x1030.jpg",
+			//		"Perez Galdos",5,4,"Ejempo",43.460699,-3.80746));
+			
+			
 			lugarRepository.save(new Lugar("La Catedral", "Edificio religioso",
 					"https://santanderspain.info/wp-content/uploads/2014/08/Catedral-de-Santander-686x1030.jpg",
 					"Avda me la invento NA" , "942 20 21 22", "10:00 - 20:00", false ,
@@ -149,6 +152,33 @@ public class Application {
 				log.info(restauranteItaliano.toString());
 			}
 			log.info("");
+			
+		};
+	}
+	@Bean
+	public CommandLineRunner loadDataHoteles(HotelRepository hotelRepository) {
+		return (args) -> {
+			hotelRepository.save(new Hotel("Hotel Real",1.24,"https://s-ec.bstatic.com/images/hotel/max1024x768/100/100900180.jpg",
+				"Perez Galdos",5,4,"Ejempo",43.460699,-3.80746));
+			hotelRepository.save(new Hotel("Hotel Bahia", 2.05,"https://media-cdn.tripadvisor.com/media/photo-s/09/01/70/24/hotel-bahia-santander.jpg",
+					"Plaza de las Cachavas",4,4,"En la zona de PuertoChico",22.462,-3.50));
+
+
+			// fetch all lugares
+			log.info("Lugares found with findAll():");
+			log.info("-------------------------------");
+			for (Hotel hotel : hotelRepository.findAll()) {
+				log.info(hotel.toString());
+			}
+			log.info("");
+
+			// fetch an individual lugar by ID
+			Hotel hotel = hotelRepository.findOne(1L);
+			log.info("Lugar found with findOne(1L):");
+			log.info("--------------------------------");
+			log.info(hotel.toString());
+			log.info("");
+
 			
 		};
 	}
